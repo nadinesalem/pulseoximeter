@@ -1,0 +1,35 @@
+# ECE 5356: Biosensors and Bioelectronics
+# By: Nadine Salem
+# Team Project
+
+# This code will take the pulse of a user in conjuntion with heartrate.py and store previous readings into an array
+
+# Import necessary libraries
+from machine import pin, signal, ADC
+import time
+
+# Store previous readings in an array
+maximumHistory = 500
+history = []
+
+while True:
+    previousReadings = adc.read()
+
+history.append(previousReadings)
+
+#Define constraints of the array
+history = history[ -maximumHistory: ]
+minimum, maximum = min(history), max(history)
+
+#Turn on sensor if array is not overloaded
+on = (((minimum + maximum) * 3) // 4)
+off = ((minimum + maximum) // 2)
+
+if previousReadings > on:
+    led.on()
+
+if previousReadings < off:
+    led.off()
+
+
+

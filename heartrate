@@ -1,0 +1,45 @@
+# ECE 5356: Biosensors and Bioelectronics
+# By: Nadine Salem
+# Team Project
+
+# This code will take the pulse of a user from an inputted sensor and output BPM and heart rate in a graph
+
+# Define libraries
+from machine import Pin, Signal, ADC, Timer
+
+
+# Define variables
+adc = machine.ADC(0)
+heartBeat = False
+beats = 0
+
+# Calculate BPM from inputted sensor
+def calculateBPM(beats):
+# Starting with no beats, take readings every 15 seconds and multiply by 4 for 60 seconds
+    print('BPM:', beats * 4) 
+    beats = 0
+
+# Set sensor to take reading every 15 seconds
+timer = Timer(1)
+timer.init(period=10000, mode=Timer.PERIODIC, callback=calculate_bpm)
+
+while True:
+    previousReadings = adc.read()
+    history.append(previousReadings)
+
+    #Define constraints of the array
+    history = history[ -maximumHistory: ]
+    minimum, maximum = min(history), max(history)
+
+
+    on = (((minimum + maximum * 3)) // 4)   
+    off = ((minimum + maximum) // 2)     
+
+    if not beat and v > on:
+        beat = True
+        beats += 1
+        led.on()
+
+    if beat and v < off:
+        beat = False
+        led.off()
